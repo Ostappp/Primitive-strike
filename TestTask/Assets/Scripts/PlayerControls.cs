@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
@@ -24,8 +22,8 @@ public class PlayerControls : MonoBehaviour
         if (_isGrounded)
             Move();
     }
-
-    private void OnInput(InputValue inputValue)
+    //Set move direction
+    private void OnMove(InputValue inputValue)
     {
         _moveInput = inputValue.Get<Vector2>();
     }
@@ -35,7 +33,7 @@ public class PlayerControls : MonoBehaviour
 
     }
 
-
+    //Move player by velocity
     private void Move()
     {
         Vector3 velocity = Vector3.forward * _moveInput.y + Vector3.right * _moveInput.x;
@@ -44,6 +42,7 @@ public class PlayerControls : MonoBehaviour
 
         _rigidbody.velocity = velocity;
     }
+    //Check if player is grounded
     private bool IsGrounded()
     {
         return Physics.Raycast(checkGroundPosition.position, Vector3.down, groundCheckDistance);
