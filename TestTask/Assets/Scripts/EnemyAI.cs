@@ -17,8 +17,11 @@ public class EnemyAI : MonoBehaviour
 
     private bool _canAttack = true;
 
-    [SerializeField] private Transform _head;
+    [SerializeField] private Transform head;
     private Rigidbody _rigidbody;
+
+
+    [SerializeField] private GameObject deathEffect;
     void Start()
     {
         _target = GameObject.FindGameObjectWithTag(targetTag).transform;
@@ -42,12 +45,18 @@ public class EnemyAI : MonoBehaviour
         else
             _target = GameObject.FindGameObjectWithTag(targetTag).transform;
     }
+
+    public void OnDestroy()
+    {
+        Instantiate(deathEffect, transform.position + Vector3.up, Quaternion.identity);
+    }
+
     private void SetLook()
     {
-        _head.LookAt(_target);
+        head.LookAt(_target);
         //rotate entity to look at player
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x, _head.eulerAngles.y, transform.eulerAngles.z);
-        _head.LookAt(_target);
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, head.eulerAngles.y, transform.eulerAngles.z);
+        head.LookAt(_target);
     }
     private void Move()
     {
@@ -59,13 +68,13 @@ public class EnemyAI : MonoBehaviour
     private void Attack()
     {
         //Create fireball
-        GameObject fireBall = Instantiate(fireBallPrefab, _head.position + _head.forward * 2, Quaternion.identity);
+        GameObject fireBall = Instantiate(fireBallPrefab, head.position + head.forward * 2, Quaternion.identity);
         fireBall.transform.LookAt(_target);
 
         //Send fireball into a player
         var fRb = fireBall.GetComponent<Rigidbody>();
         fRb.useGravity = false;
-        fRb.velocity = _head.forward * fireBallSpeed;
+        fRb.velocity = head.forward * fireBallSpeed;
 
         //Reload
         _canAttack = false;
@@ -77,7 +86,7 @@ public class EnemyAI : MonoBehaviour
 
     private float TargetDistance()
     {
-        return Vector3.Distance(_head.position, _target.position);
+        return Vector3.Distance(head.position, _target.position);
     }
     private bool IsGrounded()
     {

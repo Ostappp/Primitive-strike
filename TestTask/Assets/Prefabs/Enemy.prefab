@@ -85,7 +85,8 @@ MonoBehaviour:
   fireBallSpeed: 20
   attackDistance: 50
   attackDelay: 3
-  _head: {fileID: 4830138803562693877}
+  head: {fileID: 4830138803562693877}
+  deathEffect: {fileID: 2959830047291374200, guid: 0ce9bcf51d9dee942a018a26ec5416dc, type: 3}
 --- !u!54 &8244187918168152966
 Rigidbody:
   m_ObjectHideFlags: 0

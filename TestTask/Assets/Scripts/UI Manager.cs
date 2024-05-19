@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UIManager : MonoBehaviour
 {
@@ -43,8 +44,10 @@ public class UIManager : MonoBehaviour
         Vector2 shiftPos = Vector2.zero;
         float distance = 0;
 
+        // generate a new shift position until the condition is done
         while (distance > EnemySpawnDistance.Max || distance < EnemySpawnDistance.Min)
         {
+            //generate random value in range (-max;max)
             shiftPos.x = -EnemySpawnDistance.Max + (UnityEngine.Random.value * 2 * EnemySpawnDistance.Max);
             shiftPos.y = -EnemySpawnDistance.Max + (UnityEngine.Random.value * 2 * EnemySpawnDistance.Max);
             distance = shiftPos.magnitude;
@@ -75,6 +78,12 @@ public class UIManager : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(_checkPos, checkSize);
+    }
+
+    public void DeselectButton()
+    {
+        //Deselect a button, so it won't be triggered when Space or Enter pressed
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     [Serializable]

@@ -7,6 +7,7 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private float playerSpeed;
 
+    private Player _player;
     private Rigidbody _rigidbody;
     private Vector2 _moveInput;
     private bool _isGrounded { get => IsGrounded(); }
@@ -14,6 +15,7 @@ public class PlayerControls : MonoBehaviour
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _player = GetComponent<Player>();
     }
 
     private void FixedUpdate()
@@ -29,7 +31,7 @@ public class PlayerControls : MonoBehaviour
 
     private void OnAttack()
     {
-
+        _player.Attack();
     }
 
     //Move player by velocity
