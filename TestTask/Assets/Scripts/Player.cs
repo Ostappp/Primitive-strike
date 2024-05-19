@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField, Min(1)] private int maxHealth;
     [SerializeField] private Gradient playerHealthColor;
+    public Color AttackColor;
 
     private float _playerHealth;
     private Material _playerMaterial;
@@ -35,12 +36,28 @@ public class Player : MonoBehaviour
             .Select(hit => hit.GetComponentInParent<EnemyAI>()).Where(enemy => enemy != null)// get all enemies
             .OrderBy(enemy => Vector3.Distance(transform.position, enemy.transform.position))// sort by distance from player
             .FirstOrDefault();//get closest enemy
-        if(closestEnemy != null)
+        if (closestEnemy != null)
         {
+            AttackEffect(closestEnemy.transform);
             Destroy(closestEnemy.gameObject);
         }
     }
+    private void AttackEffect(Transform enemy)
+    {
+        GameObject killingRay = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+        Destroy(killingRay.GetComponent<Collider>());
 
+        // Set position, rotation and scale
+        killingRay.transform.position = (transform.position + enemy.position) / 2;
+        killingRay.transform.LookAt(enemy);
+        killingRay.transform.Rotate(Vector3.right, 90f);
+        killingRay.transform.localScale = 0.5f*Vector3.up * Vector3.Distance(transform.position, enemy.position) + (Vector3.forward + Vector3.right) * .1f;
+
+        // Paint ray        
+        killingRay.GetComponent<MeshRenderer>().material.color = AttackColor;
+
+        Destroy(killingRay, 0.5f);        
+    }
     private void UpdateColor()
     {
         _playerMaterial.color = playerHealthColor.Evaluate(_playerHealth / maxHealth);
