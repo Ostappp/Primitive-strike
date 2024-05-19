@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 2669845959654026}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -180,7 +180,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4358522965690328812}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 100
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -213,4 +213,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkGroundPosition: {fileID: 8799043853468612003}
   groundCheckDistance: 0.1
-  playerSpeed: 10
+  playerSpeed: 5

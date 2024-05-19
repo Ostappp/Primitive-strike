@@ -33,6 +33,17 @@ public class PlayerControls : MonoBehaviour
 
     }
 
+
+    public void Damage()
+    {
+        Debug.Log($"Damage taken");
+    }
+
+
+
+
+
+
     //Move player by velocity
     private void Move()
     {
@@ -45,6 +56,12 @@ public class PlayerControls : MonoBehaviour
     //Check if player is grounded
     private bool IsGrounded()
     {
-        return Physics.Raycast(checkGroundPosition.position, Vector3.down, groundCheckDistance);
+        
+        return Physics.CheckBox(checkGroundPosition.position, new Vector3(.55f, groundCheckDistance, .55f), transform.rotation); ///Physics.Raycast(checkGroundPosition.position, Vector3.down, groundCheckDistance);
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawCube(checkGroundPosition.position, new Vector3(.55f, .1f, .55f) * 2);
     }
 }
