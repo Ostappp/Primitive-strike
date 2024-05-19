@@ -1,37 +1,27 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class EnemyAI : MonoBehaviour
 {
-    [SerializeField]
-    private string _targetTag;
+    [SerializeField] private string targetTag;
     private Transform _target;
 
-    [SerializeField, Min(.1f)]
-    private float _entitySpeed;
-    [SerializeField, Min(2)]
-    private float _dontMoveDistance; // distance where entity don't come closer to the target
+    [SerializeField, Min(.1f)] private float entitySpeed;
+    [SerializeField, Min(2)] private float dontMoveDistance; // distance where entity don't come closer to the target
 
-    [SerializeField]
-    private GameObject _fireBallPrefab;    
-    [SerializeField]
-    private float _fireBallSpeed;
+    [SerializeField] private GameObject fireBallPrefab;
+    [SerializeField] private float fireBallSpeed;
 
-    [SerializeField, Min(0)]
-    private float _attackDistance;
-    [SerializeField]
-    private float _attackDelay;
+    [SerializeField, Min(0)] private float attackDistance;
+    [SerializeField] private float attackDelay;
 
     private bool _canAttack = true;
 
-    [SerializeField]
-    private Transform _head;
+    [SerializeField] private Transform _head;
     private Rigidbody _rigidbody;
     void Start()
     {
-        _target = GameObject.FindGameObjectWithTag(_targetTag).transform;
+        _target = GameObject.FindGameObjectWithTag(targetTag).transform;
         _rigidbody = GetComponent<Rigidbody>();
     }
 
@@ -40,27 +30,28 @@ public class EnemyAI : MonoBehaviour
         if (_target != null)
         {
             SetLook();
-            if (IsGrounded() && TargetDistance() > _dontMoveDistance)
+            if (IsGrounded() && TargetDistance() > dontMoveDistance)
             {
                 Move();
             }
-            if (_canAttack && TargetDistance() <= _attackDistance)
+            if (_canAttack && TargetDistance() <= attackDistance)
             {
                 Attack();
             }
         }
         else
-            _target = GameObject.FindGameObjectWithTag(_targetTag).transform;
+            _target = GameObject.FindGameObjectWithTag(targetTag).transform;
     }
     private void SetLook()
     {
         _head.LookAt(_target);
         //rotate entity to look at player
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, _head.eulerAngles.y, transform.eulerAngles.z);
+        _head.LookAt(_target);
     }
     private void Move()
     {
-        Vector3 velocity = transform.forward * _entitySpeed;
+        Vector3 velocity = transform.forward * entitySpeed;
         velocity.y = _rigidbody.velocity.y;
 
         _rigidbody.velocity = velocity;
@@ -68,13 +59,13 @@ public class EnemyAI : MonoBehaviour
     private void Attack()
     {
         //Create fireball
-        GameObject fireBall = Instantiate(_fireBallPrefab, _head.position + _head.forward * 2, Quaternion.identity);
+        GameObject fireBall = Instantiate(fireBallPrefab, _head.position + _head.forward * 2, Quaternion.identity);
         fireBall.transform.LookAt(_target);
-        
+
         //Send fireball into a player
         var fRb = fireBall.GetComponent<Rigidbody>();
         fRb.useGravity = false;
-        fRb.velocity = _head.forward * _fireBallSpeed;
+        fRb.velocity = _head.forward * fireBallSpeed;
 
         //Reload
         _canAttack = false;
@@ -100,7 +91,7 @@ public class EnemyAI : MonoBehaviour
     }
     IEnumerator ResetAttack()
     {
-        yield return new WaitForSeconds(_attackDelay);
+        yield return new WaitForSeconds(attackDelay);
         _canAttack = true;
     }
 }

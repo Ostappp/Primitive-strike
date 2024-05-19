@@ -7,12 +7,12 @@ public class UIManager : MonoBehaviour
     public Range EnemySpawnDistance;
 
     [SerializeField]
-    private Transform _playerTransform;
+    private Transform playerTransform;
     
-    [Min(1)]
+    [SerializeField, Min(1)]
     public float checkSize;
     [SerializeField]
-    private LayerMask _groundLayer;
+    private LayerMask groundLayer;
     private Vector3 _checkPos; // gizmos spherre
     
     public void CreateEnemy()
@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
         int attempts = 100; // attempts of finding spawn place
         do
         {
-            spawnPos = _playerTransform.position;
+            spawnPos = playerTransform.position;
             shiftPos = RandomShift();
             spawnPos += new Vector3(shiftPos.x, 0, shiftPos.y);// shift pos
             attempts--;
@@ -58,7 +58,7 @@ public class UIManager : MonoBehaviour
     {
         
         Ray ray = new Ray(new Vector3(pos.x, pos.y + 1000, pos.z), Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, 1200, _groundLayer)) // check if ground exist
+        if (Physics.Raycast(ray, out RaycastHit hit, 1200, groundLayer)) // check if ground exist
         {
             groundPosition = hit.point; // ground pos
 

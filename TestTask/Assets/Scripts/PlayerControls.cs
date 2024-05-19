@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(Player))]
 public class PlayerControls : MonoBehaviour
 {
     [SerializeField] private Transform checkGroundPosition;
@@ -8,7 +8,6 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float playerSpeed;
 
     private Rigidbody _rigidbody;
-
     private Vector2 _moveInput;
     private bool _isGrounded { get => IsGrounded(); }
 
@@ -32,17 +31,6 @@ public class PlayerControls : MonoBehaviour
     {
 
     }
-
-
-    public void Damage()
-    {
-        Debug.Log($"Damage taken");
-    }
-
-
-
-
-
 
     //Move player by velocity
     private void Move()

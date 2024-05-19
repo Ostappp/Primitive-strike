@@ -119,11 +119,11 @@ MonoBehaviour:
   EnemySpawnDistance:
     Min: 10
     Max: 20
-  _playerTransform: {fileID: 0}
-  _groundLayer:
+  playerTransform: {fileID: 0}
+  checkSize: 2
+  groundLayer:
     serializedVersion: 2
     m_Bits: 128
-  checkSize: 2
 --- !u!1 &4488847767429259717
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,7 +271,7 @@ GameObject:
   - component: {fileID: 3691142855759545619}
   - component: {fileID: 564389921756496605}
   m_Layer: 5
-  m_Name: Button
+  m_Name: CreateEnemyButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

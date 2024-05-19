@@ -78,13 +78,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cec34c9ce3f611f4abed4be3d40576b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetTag: Player
-  _entitySpeed: 1
-  _dontMoveDistance: 5
-  _attackDistance: 50
-  _fireBall: {fileID: 7387702167233668603, guid: 856f4a6c3b6ddc244b9473df233d2f41, type: 3}
-  _fireBallSpeed: 20
-  _attackDelay: 3
+  targetTag: Player
+  entitySpeed: 1
+  dontMoveDistance: 5
+  fireBallPrefab: {fileID: 7387702167233668603, guid: 856f4a6c3b6ddc244b9473df233d2f41, type: 3}
+  fireBallSpeed: 20
+  attackDistance: 50
+  attackDelay: 3
   _head: {fileID: 4830138803562693877}
 --- !u!54 &8244187918168152966
 Rigidbody:
