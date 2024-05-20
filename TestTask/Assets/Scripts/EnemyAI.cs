@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(AudioSource))]
 public class EnemyAI : MonoBehaviour
 {
 
@@ -12,6 +12,7 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField] private GameObject fireBallPrefab;
     [SerializeField] private float fireBallSpeed;
+    [SerializeField] private AudioClip shootSound;
 
     [SerializeField, Min(0)] private float attackDistance;
     [SerializeField] private float attackDelay;
@@ -27,6 +28,9 @@ public class EnemyAI : MonoBehaviour
 
     private float _colorValue = 0;
     private float ColorValue { get => _colorValue; set => _colorValue = value > 1 ? value - 1 : value; }
+    
+    
+    private AudioSource _audioSource;
 
     [SerializeField] private GameObject deathEffect;
     void Start()
@@ -34,6 +38,8 @@ public class EnemyAI : MonoBehaviour
         _target = GameObject.FindGameObjectWithTag(targetTag).transform;
         _rigidbody = GetComponent<Rigidbody>();
         _entityMaterial = GetComponentInChildren<MeshRenderer>().material;
+        _audioSource = GetComponent<AudioSource>();
+        _audioSource.playOnAwake = false;
     }
 
     private void FixedUpdate()
@@ -88,12 +94,18 @@ public class EnemyAI : MonoBehaviour
         fRb.useGravity = false;
         fRb.velocity = head.forward * fireBallSpeed;
 
+        //Play sound
+        AttackAudio();
+
         //Reload
         _canAttack = false;
         StartCoroutine(ResetAttack());
     }
 
-
+    private void AttackAudio()
+    {
+        _audioSource.PlayOneShot(shootSound);
+    }
 
     private float TargetDistance()
     {

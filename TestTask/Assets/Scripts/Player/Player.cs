@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(MeshRenderer), typeof(AudioSource))]
 public class Player : MonoBehaviour
 {
     [SerializeField, Min(1)] private int maxHealth;
@@ -11,11 +11,17 @@ public class Player : MonoBehaviour
 
     private float _playerHealth;
     private Material _playerMaterial;
+
+    [SerializeField] private AudioClip shootSound;
+    private AudioSource _playerAudioSource;
     // Start is called before the first frame update
     void Start()
     {
         _playerHealth = maxHealth;
         _playerMaterial = GetComponent<MeshRenderer>().material;
+        _playerAudioSource = GetComponent<AudioSource>();
+        _playerAudioSource.playOnAwake = false;
+
         UpdateColor();
     }
 
@@ -44,6 +50,9 @@ public class Player : MonoBehaviour
     }
     private void AttackEffect(Transform enemy)
     {
+        //Play sound
+        AttackAudio();
+
         GameObject killingRay = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         Destroy(killingRay.GetComponent<Collider>());
 
@@ -57,6 +66,10 @@ public class Player : MonoBehaviour
         killingRay.GetComponent<MeshRenderer>().material.color = AttackColor;
 
         Destroy(killingRay, 0.5f);        
+    }
+    private void AttackAudio()
+    {
+        _playerAudioSource.PlayOneShot(shootSound);
     }
     private void UpdateColor()
     {
