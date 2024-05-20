@@ -729,8 +729,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3671348115615814099, guid: 61d50840e4e69c545af1b631f7b2d451, type: 3}
+      propertyPath: deathSound
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3671348115615814099, guid: 61d50840e4e69c545af1b631f7b2d451, type: 3}
       propertyPath: attackDelay
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3671348115615814099, guid: 61d50840e4e69c545af1b631f7b2d451, type: 3}
+      propertyPath: deathEffect
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3671348115615814099, guid: 61d50840e4e69c545af1b631f7b2d451, type: 3}
       propertyPath: entitySpeed
@@ -976,8 +984,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3671348115615814099, guid: 61d50840e4e69c545af1b631f7b2d451, type: 3}
+      propertyPath: deathSound
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3671348115615814099, guid: 61d50840e4e69c545af1b631f7b2d451, type: 3}
       propertyPath: attackDelay
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3671348115615814099, guid: 61d50840e4e69c545af1b631f7b2d451, type: 3}
+      propertyPath: deathEffect
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3671348115615814099, guid: 61d50840e4e69c545af1b631f7b2d451, type: 3}
       propertyPath: entitySpeed
@@ -1288,6 +1304,14 @@ PrefabInstance:
     - target: {fileID: 2475435882039257260, guid: 61d50840e4e69c545af1b631f7b2d451, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3671348115615814099, guid: 61d50840e4e69c545af1b631f7b2d451, type: 3}
+      propertyPath: deathSound
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3671348115615814099, guid: 61d50840e4e69c545af1b631f7b2d451, type: 3}
+      propertyPath: deathEffect
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3671348115615814099, guid: 61d50840e4e69c545af1b631f7b2d451, type: 3}
       propertyPath: entitySpeed

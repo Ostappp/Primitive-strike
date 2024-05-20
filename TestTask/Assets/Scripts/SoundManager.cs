@@ -16,9 +16,7 @@ public class SoundManager : MonoBehaviour
         _volume = PlayerPrefs.GetFloat("SoundVolume", 1f);
         DontDestroyOnLoad(this);
     }
-    /// <summary>
-    /// 
-    /// </summary>
+    
     /// <param name="value">integer value in range [0, 100]</param>
     public void SetVolume(int value)
     {
