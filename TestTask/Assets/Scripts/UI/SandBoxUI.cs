@@ -1,8 +1,9 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
-public class UIManager : MonoBehaviour
+public class SandBoxUI : MonoBehaviour
 {
     public GameObject EnemyPrefab;
     public Range EnemySpawnDistance;
@@ -16,6 +17,11 @@ public class UIManager : MonoBehaviour
     private LayerMask groundLayer;
     private Vector3 _checkPos; // gizmos spherre
     
+    public void ExitGame()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     public void CreateEnemy()
     {
         Vector3 spawnPos;

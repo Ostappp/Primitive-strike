@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class EnemyAI : MonoBehaviour
 {
+
     [SerializeField] private string targetTag;
     private Transform _target;
 
@@ -21,15 +22,26 @@ public class EnemyAI : MonoBehaviour
     private Rigidbody _rigidbody;
 
 
+    [SerializeField] private Gradient entityColor;
+    private Material _entityMaterial;
+
+    private float _colorValue = 0;
+    private float ColorValue { get => _colorValue; set => _colorValue = value > 1 ? value - 1 : value; }
+
     [SerializeField] private GameObject deathEffect;
     void Start()
     {
         _target = GameObject.FindGameObjectWithTag(targetTag).transform;
         _rigidbody = GetComponent<Rigidbody>();
+        _entityMaterial = GetComponentInChildren<MeshRenderer>().material;
     }
 
     private void FixedUpdate()
     {
+
+        ColorValue += Time.deltaTime;
+        _entityMaterial.color = entityColor.Evaluate(ColorValue);
+
         if (_target != null)
         {
             SetLook();
@@ -80,7 +92,6 @@ public class EnemyAI : MonoBehaviour
         _canAttack = false;
         StartCoroutine(ResetAttack());
     }
-
 
 
 
