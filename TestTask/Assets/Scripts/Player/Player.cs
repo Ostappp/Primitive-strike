@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     private Material _playerMaterial;
 
     [SerializeField] private AudioClip shootSound;
+    [SerializeField] private AudioClip hurtSound;
     private AudioSource _playerAudioSource;
     // Start is called before the first frame update
     void Start()
@@ -22,11 +23,19 @@ public class Player : MonoBehaviour
         _playerAudioSource = GetComponent<AudioSource>();
         _playerAudioSource.playOnAwake = false;
 
-        UpdateColor();
-    }
 
+        UpdateAudio();
+        UpdateColor();
+
+        SoundManager.Instance.ChangedSettings += UpdateAudio;
+    }
+    private void OnDestroy()
+    {
+        SoundManager.Instance.ChangedSettings -= UpdateAudio;
+    }
     public void TakeDamage()
     {
+        PlayAudio();
         _playerHealth--;
 
         if (_playerHealth < 0)
@@ -51,7 +60,7 @@ public class Player : MonoBehaviour
     private void AttackEffect(Transform enemy)
     {
         //Play sound
-        AttackAudio();
+        PlayAudio(false);
 
         GameObject killingRay = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         Destroy(killingRay.GetComponent<Collider>());
@@ -60,19 +69,27 @@ public class Player : MonoBehaviour
         killingRay.transform.position = (transform.position + enemy.position) / 2;
         killingRay.transform.LookAt(enemy);
         killingRay.transform.Rotate(Vector3.right, 90f);
-        killingRay.transform.localScale = 0.5f*Vector3.up * Vector3.Distance(transform.position, enemy.position) + (Vector3.forward + Vector3.right) * .1f;
+        killingRay.transform.localScale = 0.5f * Vector3.up * Vector3.Distance(transform.position, enemy.position) + (Vector3.forward + Vector3.right) * .1f;
 
         // Paint ray        
         killingRay.GetComponent<MeshRenderer>().material.color = AttackColor;
 
-        Destroy(killingRay, 0.5f);        
+        Destroy(killingRay, 0.5f);
     }
-    private void AttackAudio()
+    private void PlayAudio(bool damageTaken = true)
     {
-        _playerAudioSource.PlayOneShot(shootSound);
+        if (damageTaken)
+            _playerAudioSource.PlayOneShot(hurtSound);
+        else
+            _playerAudioSource.PlayOneShot(shootSound);
     }
     private void UpdateColor()
     {
         _playerMaterial.color = playerHealthColor.Evaluate(_playerHealth / maxHealth);
+    }
+    private void UpdateAudio()
+    {
+        SoundManager sm = FindAnyObjectByType<SoundManager>();
+        _playerAudioSource.volume = sm != null ? sm.GetVolume() : 1f;
     }
 }

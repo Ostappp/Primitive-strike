@@ -10,6 +10,11 @@ public class FireBall : MonoBehaviour
     {
         _audioSource = GetComponent<AudioSource>();
         _audioSource.playOnAwake = false;
+
+        UpdateAudio();
+        SoundManager.Instance.ChangedSettings += UpdateAudio;
+
+        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -27,5 +32,17 @@ public class FireBall : MonoBehaviour
             player.TakeDamage();
 
         Destroy(gameObject, 1);       
+    }
+
+    private void OnDestroy()
+    {
+        SoundManager.Instance.ChangedSettings -= UpdateAudio;
+    }
+
+
+    private void UpdateAudio()
+    {
+        SoundManager sm = FindAnyObjectByType<SoundManager>();
+        _audioSource.volume = sm != null ? sm.GetVolume() : 1f;
     }
 }

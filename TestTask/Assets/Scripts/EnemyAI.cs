@@ -25,11 +25,12 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField] private Gradient entityColor;
     private Material _entityMaterial;
+    [SerializeField] private AudioClip deathSound;
 
     private float _colorValue = 0;
     private float ColorValue { get => _colorValue; set => _colorValue = value > 1 ? value - 1 : value; }
-    
-    
+
+
     private AudioSource _audioSource;
 
     [SerializeField] private GameObject deathEffect;
@@ -40,6 +41,10 @@ public class EnemyAI : MonoBehaviour
         _entityMaterial = GetComponentInChildren<MeshRenderer>().material;
         _audioSource = GetComponent<AudioSource>();
         _audioSource.playOnAwake = false;
+
+        UpdateAudio();
+        SoundManager.Instance.ChangedSettings += UpdateAudio;
+        
     }
 
     private void FixedUpdate()
@@ -66,7 +71,14 @@ public class EnemyAI : MonoBehaviour
 
     public void OnDestroy()
     {
-        Instantiate(deathEffect, transform.position + Vector3.up, Quaternion.identity);
+        if (deathEffect)
+        {
+            var deathObj = Instantiate(deathEffect, transform.position + Vector3.up, Quaternion.identity);
+            deathObj.AddComponent<AudioSource>().PlayOneShot(deathSound, _audioSource.volume);
+        }
+        
+
+        SoundManager.Instance.ChangedSettings -= UpdateAudio;
     }
 
     private void SetLook()
@@ -95,16 +107,20 @@ public class EnemyAI : MonoBehaviour
         fRb.velocity = head.forward * fireBallSpeed;
 
         //Play sound
-        AttackAudio();
+        PlayAudio();
 
         //Reload
         _canAttack = false;
         StartCoroutine(ResetAttack());
     }
-
-    private void AttackAudio()
+    private void PlayAudio()
     {
         _audioSource.PlayOneShot(shootSound);
+    }
+    private void UpdateAudio()
+    {
+        SoundManager sm = FindAnyObjectByType<SoundManager>();
+        _audioSource.volume = sm != null ? sm.GetVolume() : 1f;
     }
 
     private float TargetDistance()

@@ -261,6 +261,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   AttackColor: {r: 1, g: 0, b: 0.8268976, a: 0}
   shootSound: {fileID: 8300000, guid: d0016f5c9be7a06469423e40fa239527, type: 3}
+  hurtSound: {fileID: 8300000, guid: 58f7b44d4d026d542a7ac8c2095e4f42, type: 3}
 --- !u!82 &2456867903092499114
 AudioSource:
   m_ObjectHideFlags: 0
