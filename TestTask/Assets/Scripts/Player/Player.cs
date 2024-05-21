@@ -89,7 +89,6 @@ public class Player : MonoBehaviour
     }
     private void UpdateAudio()
     {
-        SoundManager sm = FindAnyObjectByType<SoundManager>();
-        _playerAudioSource.volume = sm != null ? sm.GetVolume() : 1f;
+        _playerAudioSource.volume = SoundManager.Instance ? SoundManager.Instance.GetVolume() : 1f;
     }
 }

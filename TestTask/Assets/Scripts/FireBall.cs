@@ -42,7 +42,6 @@ public class FireBall : MonoBehaviour
 
     private void UpdateAudio()
     {
-        SoundManager sm = FindAnyObjectByType<SoundManager>();
-        _audioSource.volume = sm != null ? sm.GetVolume() : 1f;
+        _audioSource.volume = SoundManager.Instance ? SoundManager.Instance.GetVolume() : 1f;
     }
 }

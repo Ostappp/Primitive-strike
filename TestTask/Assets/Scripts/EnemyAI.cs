@@ -119,11 +119,7 @@ public class EnemyAI : MonoBehaviour
     }
     private void UpdateAudio()
     {
-        SoundManager sm = FindAnyObjectByType<SoundManager>();
-        if (sm)
-            _audioSource.volume = sm.GetVolume();
-        else 
-            _audioSource.volume = 1.0f;
+        _audioSource.volume = SoundManager.Instance ? SoundManager.Instance.GetVolume() : 1f;
     }
 
     private float TargetDistance()
